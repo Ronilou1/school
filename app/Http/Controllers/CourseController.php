@@ -44,8 +44,8 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
-        return view('courses.course', compact('course'));
+        $students = Student::where('course_id', $course->id)->get();
+        return view('courses.course', compact('course', 'students'));
     }
 
     /**
@@ -81,4 +81,14 @@ class CourseController extends Controller
 
         return redirect()->route('products.index')->with('success', 'Course deleted successfully.');
     }
+
+
+
+    // Assuming the relationship is defined as hasMany
+    public function students()
+    {
+        return $this->hasMany(Student::class);
+    }
+
+
 }
